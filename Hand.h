@@ -6,7 +6,7 @@
 
 using namespace std;
 
-// represents a hand or deck of cards with a vector containing integers 0 - 12 to encode the 13 cards
+// represents a hand of cards with a vector containing integers 0 - 12 to encode the 13 cards
 // suit does not matter in blackjack
 // 0 = ace
 // 1 - 9 = cards 2 - 10
@@ -23,6 +23,7 @@ class Hand
     void add_card(int card) {cards.push_back(card);}
     void remove_card() {cards.pop_back();}
     void print() const;
+    int sum() const;
 };
 
 #endif

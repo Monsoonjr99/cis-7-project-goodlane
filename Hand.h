@@ -6,6 +6,11 @@
 
 using namespace std;
 
+const int ACE = 0;
+const int JACK = 10;
+const int QUEEN = 11;
+const int KING = 12;
+
 // represents a hand of cards with a vector containing integers 0 - 12 to encode the 13 cards
 // suit does not matter in blackjack
 // 0 = ace

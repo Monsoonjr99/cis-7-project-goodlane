@@ -32,7 +32,6 @@ void Hand::print() const
 // sums the hand under blackjack rules
 int Hand::sum() const
 {
-    const int BUST = 21;    // aces count as 1 instead of 11 if the total exceeds this value
     int total = 0;
     for(int i = 0; i < cards.size(); i++)
     {

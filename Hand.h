@@ -6,6 +6,10 @@
 
 using namespace std;
 
+const int BUST = 21;  // a hand in blackjack is a bust if its sum is greater than this number
+
+// card code constants
+
 const int ACE = 0;
 const int JACK = 10;
 const int QUEEN = 11;

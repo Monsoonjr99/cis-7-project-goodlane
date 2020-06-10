@@ -18,7 +18,9 @@ class Deck
     public:
         Deck() {reset();} // default constructor
         void reset(); // sets all card amounts to 4
+        int size() const; // returns how many cards are left in the deck
         int draw(); // draws a random card from the deck; decreases the amount of that card by 1 and returns the card number
+        float chance_of_drawing_card_in_range(int, int = -1, bool = false) const; // returns probability of drawing a card with a value in range
 };
 
 #endif

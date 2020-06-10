@@ -4,6 +4,8 @@
 
 using namespace std;
 
+float chance_of_winning_if_stand(const Hand *, const Hand *, const Deck *);
+
 int main()
 {
   // declare deck and hand objects
@@ -113,6 +115,15 @@ int main()
     cout << "Game result: YOU LOSE";
   cout << endl;
 
+  cout << "Test: " << chance_of_winning_if_stand(&player_hand, &dealer_hand, &deck);
+
   system("pause");
   return 0;
+}
+
+// currently a TEST
+float chance_of_winning_if_stand(const Hand *player, const Hand *dealer, const Deck *deck)
+{
+  float chance_of_dealer_bust;
+  return deck->chance_of_drawing_card_in_range(5,10); // test
 }

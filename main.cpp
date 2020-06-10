@@ -11,6 +11,8 @@ int main()
   Hand dealer_hand;
   Hand player_hand;
 
+  char hit_choice;
+
   cout << "This program simulates the casino card game Blackjack." << endl;
   cout << "The cards are represented here with their symbol if face up, or _ if face-down." << endl;
   cout << endl;
@@ -26,19 +28,60 @@ int main()
   // display hands
   cout << "Dealer hand: ";
   dealer_hand.print();
+  cout << endl;
   cout << "Player hand: ";
   player_hand.print();
 
-  // display sums
-  cout << endl;
-  cout << "The sum of the dealer hand is: " << dealer_hand.sum();
-  if(dealer_hand.sum() > BUST)
-    cout << " [BUST]";
-  cout << endl;
+  // display player sum
   cout << "The sum of the player hand is: " << player_hand.sum();
-  if(player_hand.sum() > BUST)
-    cout << " [BUST]";
+  if(player_hand.sum() == BUST) // Blackjack
+  {
+    cout << " [BLACKJACK]\n\n";
+    dealer_hand.set_hole_card(false); // reveal hole card
+    cout << "Dealer hand: ";
+    dealer_hand.print();
+    cout << "The sum of the dealer hand is: " << dealer_hand.sum();
+    if(dealer_hand.sum() == BUST)
+    {
+      cout << " [BLACKJACK]\n\n";
+      cout << "Game resule: TIE" << endl;
+    }
+    else
+    {
+      cout << "\n\n";
+      cout << "Game result: YOU WIN" << endl;
+    }
+    return 0;
+  }
+  cout << "\n\n";
+
+  // ask user hit or stay
+  cout << "Hit or stay (H/S): ";
+  cin >> hit_choice;
   cout << endl;
+
+  while(hit_choice == 'H' || hit_choice == 'h'){
+    // if hit, player draws card
+    player_hand.add_card(deck.draw());
+
+    // display player hand
+    cout << "Player hand: ";
+    player_hand.print();
+
+    // display player sum
+    cout << "The sum of the player hand is: " << player_hand.sum();
+    if(player_hand.sum() > BUST)
+    {
+      cout << " [BUST]\n\n";
+      break;  // don't ask player again if bust
+    }
+    cout << "\n\n";
+
+    // ask player hit or stay again
+    cout << "Hit or stay (H/S): ";
+    cin >> hit_choice;
+    cout << endl;
+  }
 
   system("pause");
   return 0;

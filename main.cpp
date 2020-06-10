@@ -11,6 +11,8 @@ int main()
   Hand dealer_hand;
   Hand player_hand;
 
+  const int DEALER_HIT_LIMIT = 16;
+
   char hit_choice;
 
   cout << "This program simulates the casino card game Blackjack." << endl;
@@ -44,7 +46,7 @@ int main()
     if(dealer_hand.sum() == BUST)
     {
       cout << " [BLACKJACK]\n\n";
-      cout << "Game resule: TIE" << endl;
+      cout << "Game result: TIE" << endl;
     }
     else
     {
@@ -82,6 +84,34 @@ int main()
     cin >> hit_choice;
     cout << endl;
   }
+
+  cout << "Dealer's turn...\n\n";
+
+  dealer_hand.set_hole_card(false); // reveal hole card
+  // dealer hits as long as their total is 16 or below
+  while(dealer_hand.sum() <= DEALER_HIT_LIMIT)
+    dealer_hand.add_card(deck.draw());
+  
+  // display dealer hand and sum
+  cout << "Dealer hand: ";
+  dealer_hand.print();
+  cout << "The sum of the dealer hand is: " << dealer_hand.sum();
+  if(dealer_hand.sum() > BUST)
+    cout << " [BUST]";
+  cout << "\n\n";
+
+  // determine game result
+  if(player_hand.sum() > BUST)
+    cout << "Game result: YOU LOSE";
+  else if(dealer_hand.sum() > BUST)
+    cout << "Game result: YOU WIN";
+  else if(player_hand.sum() > dealer_hand.sum())
+    cout << "Game result: YOU WIN";
+  else if(player_hand.sum() == dealer_hand.sum())
+    cout << "Game result: TIE";
+  else
+    cout << "Game result: YOU LOSE";
+  cout << endl;
 
   system("pause");
   return 0;

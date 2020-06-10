@@ -3,7 +3,7 @@ C++ program that calculates chances of winning a Blackjack game
 
 Class project of Danny Goodlow and Ryan Lane
 
-This program is to simulate a game of Blackjack and calculate the change of winning for each player hand
+This program is to simulate a game of Blackjack and calculate the chance of winning for each player hand
 
 version 1.0  
 created June 10, 2020

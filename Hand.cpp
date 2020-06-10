@@ -5,6 +5,7 @@ Hand::Hand(int *dealt_cards, int length)
 {
   for(int i = 0; i < length; i++)
     add_card(dealt_cards[i]);
+  hole_card = false;
 }
 
 // prints cards to the console
@@ -12,7 +13,9 @@ void Hand::print() const
 {
   for(int i = 0; i < cards.size(); i++)
   {
-    if(cards[i] == ACE)
+    if(i == 0 && hole_card)
+      cout << " _";
+    else if(cards[i] == ACE)
       cout << " A";
     else if(cards[i] < 9) // cards 2 through 9
       cout << ' ' << (cards[i] + 1); // add 1 to convert card code to card number
@@ -33,7 +36,10 @@ void Hand::print() const
 int Hand::sum() const
 {
     int total = 0;
-    for(int i = 0; i < cards.size(); i++)
+    int start = 0;  // start counting the deck from the first card only if it is face-up; otherwise start with the second card
+    if(hole_card)
+      start = 1;
+    for(int i = start; i < cards.size(); i++)
     {
         if(cards[i] >= JACK) // face card
             total += 10;
@@ -44,7 +50,7 @@ int Hand::sum() const
     }
 
     // if the hand busts by counting aces as 11, recount the aces as 1 until the total is less than 21
-    for(int i = 0; total > BUST && i < cards.size(); i++)
+    for(int i = start; total > BUST && i < cards.size(); i++)
     {
         if(cards[i] == ACE)
             total -= 10; // recount each ace as 1 instead of 11 by subtracting 10

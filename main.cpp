@@ -11,11 +11,16 @@ int main()
   Hand dealer_hand;
   Hand player_hand;
 
-  // TEST drawing cards and adding them to hands
-  for(int i = 0; i < 3; i++)
-    dealer_hand.add_card(deck.draw());
+  cout << "This program simulates the casino card game Blackjack." << endl;
+  cout << "The cards are represented here with their symbol if face up, or _ if face-down." << endl;
+  cout << endl;
 
-  for(int i = 0; i < 3; i++)
+  // draw two cards for each hand and set the dealer's hand to have a face-down card
+  for(int i = 0; i < 2; i++)
+    dealer_hand.add_card(deck.draw());
+  dealer_hand.set_hole_card(true);
+
+  for(int i = 0; i < 2; i++)
     player_hand.add_card(deck.draw());
 
   // display hands

@@ -26,11 +26,13 @@ class Hand
 {
   private:
     vector<int> cards;  // vector containing the hand of cards
+    bool hole_card;     // if the first card of the hand should be face-down
   public:
-    Hand() {} // default constuctor
+    Hand() {hole_card = false;} // default constuctor
     Hand(int *, int); // constructor for initializing hand from array
     void add_card(int card) {cards.push_back(card);}
     void remove_card() {cards.pop_back();}
+    void set_hole_card(bool b) {hole_card = b;}
     void print() const;
     int sum() const;
 };

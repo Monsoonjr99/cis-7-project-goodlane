@@ -59,6 +59,8 @@ int main()
   }
   cout << "\n\n";
 
+  cout << "Rough chance of winning if player stands: " << chance_of_winning_if_stand(&player_hand, &dealer_hand, &deck) << "\n\n";
+
   // ask user hit or stay
   cout << "Hit or stay (H/S): ";
   cin >> hit_choice;
@@ -80,6 +82,8 @@ int main()
       break;  // don't ask player again if bust
     }
     cout << "\n\n";
+
+    cout << "Rough chance of winning if player stands: " << chance_of_winning_if_stand(&player_hand, &dealer_hand, &deck) << "\n\n";
 
     // ask player hit or stay again
     cout << "Hit or stay (H/S): ";
@@ -115,15 +119,37 @@ int main()
     cout << "Game result: YOU LOSE";
   cout << endl;
 
-  cout << "Test: " << chance_of_winning_if_stand(&player_hand, &dealer_hand, &deck);
-
   system("pause");
   return 0;
 }
 
-// currently a TEST
+// rough estimation of the chance the player wins with their current hand
+// ideally should take hole card and potential for multiple hits into account; not enough time
 float chance_of_winning_if_stand(const Hand *player, const Hand *dealer, const Deck *deck)
 {
   float chance_of_dealer_bust;
-  return deck->chance_of_drawing_card_in_range(5,10); // test
+  float chance_dealer_scores_lower;
+  int player_sum = player->sum();
+  int dealer_sum = dealer->sum();
+
+  // find chance of dealer bust
+  if(dealer_sum >= 12)  // only possible to bust if sum is at least 12
+    chance_of_dealer_bust = deck->chance_of_drawing_card_in_range(BUST - dealer_sum + 1, 10, true);
+  else
+    chance_of_dealer_bust = 0.0;
+
+  // determine if a newly-drawn ace should count as 11 or 1 for the dealer
+  bool dealer_ace_counts_one;
+  if(dealer_sum < 11) // ace as 11 would bust if the sum is 11 or higher
+    dealer_ace_counts_one = false;
+  else
+    dealer_ace_counts_one = true;
+  
+  // find chance of dealer scoring lower than player
+  if(dealer_sum < player_sum - 1) // dealer is guaranteed to tie or win if their sum is one less than the player's
+    chance_dealer_scores_lower = deck->chance_of_drawing_card_in_range(1, player_sum - dealer_sum - 1, dealer_ace_counts_one); // one less than the difference in sums to keep the dealer sum lower
+  else
+    chance_dealer_scores_lower = 0.0;
+
+  return chance_of_dealer_bust + (chance_dealer_scores_lower * (1 - chance_of_dealer_bust));
 }

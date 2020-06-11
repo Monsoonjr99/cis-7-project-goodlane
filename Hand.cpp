@@ -33,6 +33,7 @@ void Hand::print() const
 }
 
 // sums the hand under blackjack rules
+// does not count face-down hole card
 int Hand::sum() const
 {
     int total = 0;
